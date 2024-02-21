@@ -1,0 +1,10 @@
+[network]
+host = "localhost"
+port = 6675
+listen_amount = 5
+
+[info]
+name = "dev server"
+motd = "welcome to the dev server!"
+
+
