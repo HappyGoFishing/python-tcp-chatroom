@@ -3,16 +3,21 @@ import socket, threading, time
 CONNECT_HOST = "192.168.0.7"
 CONNECT_PORT = 6675
 
+username: str
+
 def receive_messages_and_print(sock: socket.socket) -> None:
 	while True:
 		try:
 			sender = sock.recv(1024).decode("utf-8")
 			content = sock.recv(1024).decode("utf-8")
-			print(f"\n(incoming) {sender}: {content}\n")
+			if not sender == username:
+				print(f"\n(incoming) {sender}: {content}\n")
 		except:
 			break
 
+
 def main() -> None:
+	global username
 	try:
 		print(f"Starting client")
 		client_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -36,10 +41,17 @@ def main() -> None:
 	receive_thread = threading.Thread(target=receive_messages_and_print, args=(client_sock,))
 	receive_thread.start()
 	while True:
-		msg = input("Enter message (exit to quit): ")
-		if msg == "quit":
+		try:
+
+			msg = input("Enter message (exit to quit): ")
+			if msg == "quit":
+				break
+			client_sock.send(msg.strip().encode("utf-8"))
+		except KeyboardInterrupt:
 			break
-		client_sock.send(msg.strip().encode("utf-8"))
+		except ConnectionResetError as e:
+			print(f"Lost connection {e}")
+			break
 	client_sock.close()
 
 	
