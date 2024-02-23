@@ -22,6 +22,7 @@ def is_item_in_list(item, list_of_items) -> bool:
 			return True
 	return False
 
+
 def read_and_apply_config() -> None:
 	global use_fallback_config, HOST, NAME, MOTD, PORT
 	try:
@@ -50,9 +51,11 @@ def read_and_apply_config() -> None:
 		MOTD = FALLBACK_MOTD
 		NAME = FALLBACK_NAME
 
+
 def send_broadcast(msg: str, client_list) -> None:
 	for client in client_list:
 		client.send(msg.encode("utf-8"))
+
 
 def handle_client(client: socket.socket, addr) -> None:
 	print(f"{addr} connection established")
@@ -93,7 +96,6 @@ def handle_client(client: socket.socket, addr) -> None:
 			client_usernames.remove(username)
 		if is_item_in_list(client, client_sockets):
 			client_sockets.remove(client)
-
 
 
 def main() -> None:
