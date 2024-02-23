@@ -1,9 +1,7 @@
 [network]
-host = "localhost"
+host = "192.168.0.7"
 port = 6675
 
 [info]
-name = "dev server"
-motd = "welcome to the dev server!"
-
-
+name = "Eden"
+motd = "When man ate from the fruit of knowledge, he sealed his fate to the cards"
